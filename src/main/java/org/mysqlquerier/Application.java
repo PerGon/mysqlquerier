@@ -159,6 +159,7 @@ public class Application {
     private static void log(String string) {
         System.out.print(string);
     }
+
     private static void log(String format, Object ... args) {
         System.out.format(format, args);
     }
