@@ -1,0 +1,40 @@
+import com.sun.org.apache.xalan.internal.xsltc.compiler.Copy
+
+apply plugin: 'java'
+
+sourceCompatibility = 1.7
+version = '1.0-beta'
+
+jar {
+    manifest {
+        attributes 'MySQLQuerier': 'MySQLQuerier', 'Implementation-Version': version
+        manifest.attributes("Main-Class": "org.mysqlquerier.Application")
+    }
+
+    /*
+     *This will create a "fat jar". The jar file generated will include all it's dependencies.
+     *It will be a "big" file, but it can be run with just "java -jar file.jar"
+     *without the need to worry about jar dependencies
+     */
+    from {
+        configurations.compile.collect {
+            it.isDirectory() ? it : zipTree(it)
+        }
+    }
+
+    doLast{
+        copy {
+            from 'config.properties'
+            from 'query.sql'
+            into 'build/libs'
+        }
+    }
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    compile 'mysql:mysql-connector-java:5.1.27'
+}
