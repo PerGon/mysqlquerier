@@ -97,7 +97,7 @@ public class Application {
         if (firstTime)
             printColumnNames(rs);
         printResult(rs);
-        log(infoTookString, (System.currentTimeMillis() - ms));
+        logln(infoTookString, (System.currentTimeMillis() - ms));
     }
 
     private static ResultSet makeSQLRequest() throws SQLException, IOException {
@@ -162,5 +162,10 @@ public class Application {
 
     private static void log(String format, Object ... args) {
         System.out.format(format, args);
+    }
+
+    private static void logln(String format, Object ... args) {
+        System.out.format(format, args);
+        logln(emptyString);
     }
 }
